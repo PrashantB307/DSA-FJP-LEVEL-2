@@ -1,0 +1,73 @@
+import java.util.*;
+
+public class Main {
+
+    public class Pair {
+        int freq;
+        int fi;
+        int li;
+
+        Pair(int freq, int fi, int li) {
+            this.freq = freq;
+            this.fi = fi;
+            this.li = li;
+        }
+    }
+
+    public static void solution(int[] arr) {
+        
+        HashMap<Integer, Pair> map = new HashMap<>();
+        int mfi = arr[0];     // Max. Frequency Item
+        int mfikiFreq = 1;
+        int mfikiSi = 0;
+        int mfikiLen = 1;
+
+        map.put(arr[0], new Pair(1, 0, 0));
+
+        for(int i = 0; i < arr.length; i++){
+            int val = arr[i];
+            if(map.containsKey(val)){
+                Pair p = map.get(val);
+                p.freq++;
+                p.li = i;
+
+                int len = i - p.fi + 1;
+
+                if(p.freq > mfikiFreq){
+                    mfi = val;
+                    mfikiFreq = p.freq;
+                    mfikiSi = p.fi;
+                    mfikiLen = len;
+                }else if(p.freq == mfikiFreq && len < mfikiLen){
+                    mfi = val;
+                    mfikiFreq = p.freq;
+                    mfikiSi = p.fi;
+                    mfikiLen = len;
+                }else if(p.freq == mfikiFreq && len == mfikiLen && p.fi < mfikiSi){
+                    mfi = val;
+                    mfikiFreq = p.freq;
+                    mfikiSi = p.fi;
+                    mfikiLen = len;
+                }else{
+                    map.put(val, new Pair(1, i, i));
+
+                }
+            }
+        }
+
+        System.out.println(mfi);
+        System.out.println(mfikiSi);
+        System.out.println(mfikiSi + mfikiLen - 1); 
+    }
+
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = scn.nextInt();
+        }
+        solution(arr);
+    }
+
+}
