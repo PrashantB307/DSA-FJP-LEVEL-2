@@ -43,7 +43,7 @@ public class Main83 {
         }
 
         char fch = puzzle.charAt(0);
-        ArrayList<Integer> wordsTocheck = map.get(fch);
+        int wordsTocheck = map.get(fch);
         int count = 0;
 
         for(int wmask : wordsTocheck){
