@@ -6,6 +6,20 @@
 
 
 
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode() {
+    }
+
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
 class Solution {
     TreeNode pre = null;
     public void flatten(TreeNode node) {
@@ -29,8 +43,7 @@ class Solution {
 
 
 
-class Solution {
-
+class Solution2 {
     class Pair {
         TreeNode head;
         TreeNode tail;
