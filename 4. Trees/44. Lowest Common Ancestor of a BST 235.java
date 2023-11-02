@@ -5,6 +5,12 @@
 //   https://practice.geeksforgeeks.org/problems/lowest-common-ancestor-in-a-bst/1
 
 
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
 
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
