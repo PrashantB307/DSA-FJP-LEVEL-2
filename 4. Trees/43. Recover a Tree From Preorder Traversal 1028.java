@@ -3,6 +3,12 @@
 //  https://leetcode.com/problems/recover-a-tree-from-preorder-traversal/
 
 
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
 
 class Solution {
 
