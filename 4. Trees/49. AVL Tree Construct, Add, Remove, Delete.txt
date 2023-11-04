@@ -1,4 +1,4 @@
-public class Main49 {
+public class main {
 
     public static class Node {
         int data;
