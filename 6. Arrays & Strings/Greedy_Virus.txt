@@ -1,0 +1,76 @@
+import java.util.*;
+
+public class VirusDataTheft {
+
+
+    static int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
+    static int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+    static boolean isValid(int x, int y, int M, int N) {
+        return x >= 1 && x <= M && y >= 1 && y <= N;
+    }
+
+    static int minDataRequired(int M, int N, int[][] containers, int[] virusLoc, int[] dummyLoc) {
+        int virusX = virusLoc[0];
+        int virusY = virusLoc[1];
+        int dummyX = dummyLoc[0];
+        int dummyY = dummyLoc[1];
+
+        boolean[][] visited = new boolean[M][N];
+        visited[virusX - 1][virusY - 1] = true;
+
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{virusX, virusY, 0}); // {x, y, dataRequired}
+
+        while (!queue.isEmpty()) {
+            int[] curr = queue.poll();
+            int x = curr[0];
+            int y = curr[1];
+            int dataRequired = curr[2];
+
+            if (x == dummyX && y == dummyY) {
+                return dataRequired;
+            }
+
+            for (int i = 0; i < 8; i++) {
+                int nx = x + dx[i];
+                int ny = y + dy[i];
+
+                if (isValid(nx, ny, M, N) && !visited[nx - 1][ny - 1]) {
+                    visited[nx - 1][ny - 1] = true;
+
+                    if (containers[nx - 1][ny - 1] >= containers[x - 1][y - 1]) {
+                        int newDataRequired = Math.max(dataRequired, containers[nx - 1][ny - 1] - containers[x - 1][y - 1]);
+                        queue.offer(new int[]{nx, ny, newDataRequired});
+                    } else {
+                        queue.offer(new int[]{nx, ny, dataRequired});
+                    }
+                }
+            }
+        }
+
+        return -1; // Unable to reach the dummy container
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int M = scanner.nextInt();
+        int N = scanner.nextInt();
+
+        int[][] containers = new int[M][N];
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < N; j++) {
+                containers[i][j] = scanner.nextInt();
+            }
+        }
+
+        int[] virusLoc = new int[]{scanner.nextInt(), scanner.nextInt()};
+        int[] dummyLoc = new int[]{scanner.nextInt(), scanner.nextInt()};
+
+        int result = minDataRequired(M, N, containers, virusLoc, dummyLoc);
+        System.out.println(result);
+
+        scanner.close();
+    }
+}
