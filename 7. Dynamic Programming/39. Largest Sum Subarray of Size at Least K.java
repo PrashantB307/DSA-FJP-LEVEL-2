@@ -1,0 +1,41 @@
+
+
+//    https://practice.geeksforgeeks.org/problems/largest-sum-subarray-of-size-at-least-k3121/1
+
+
+
+class Compute {
+    public long maxSumWithK(long a[], long n, long k)
+    {
+        long[] res = new long[a.length];
+
+        long csum = a[0];
+        res[0] = csum;
+
+        for(int i = 1; i < a.length; i++){
+            if(csum > 0){
+                csum += a[i];
+            }else{
+                csum = a[i];
+            }
+
+            res[i] = csum;
+        }
+
+        long[] win = new long[(int)n - (int)k + 1];
+        for(int i = 0; i < k; i++){
+            win[0] += a[i];
+        }
+
+        for(int i = 1; i < win.length; i++){
+            win[i] = win[i - 1] - a[i - 1] + a[i + (int)k - 1];
+        }
+
+        long ans = 0 + win[0];
+        for(int  i = 0; i < win.length - 1; i++){
+            ans = Math.max(ans, Math.max(win[i + 1], res[i] + win[i + 1]));
+        }
+
+        return ans;
+    }
+}
